@@ -1,0 +1,79 @@
+create database assignment;
+use assignment;
+create table member(
+	member_id int(5),
+	member_name varchar(20),
+	member_address varchar(30),
+    Acc_open_date date,
+    membership_type varchar(20),
+    penalty_amount int(10)
+);
+insert into member values(1,"vikaash","allahabad","2020-12-07","annual",500);
+desc member;
+select * from member;
+
+use assignment;
+create table book(
+book_no int(5),
+book_name varchar(30),
+author_name varchar(30),
+cost int(7),
+category char(10)
+);
+desc book;
+--select * from book;
+
+alter table member drop column penalty_amount;
+
+--=========================================================
+create database problems;
+use problems;
+create table member(
+	member_id int(4),
+	member_name varchar(20),
+    member_add varchar(30),
+    acc_open_date date,
+    membership_type varchar(20)
+);
+desc member;
+
+use problems;
+create table books(
+	book_no int (10),
+    book_name varchar(20),
+    author varchar(20),
+    cost int(20),
+    catageries varchar(20)
+);
+desc books;
+
+use problems;
+create table issue(
+	lib_issue_id int(5),
+    book_no int(5),
+    member_id int(5),
+    issue_date date,
+    return_date date
+);
+desc issue;
+
+use problems;
+insert into member values(1,"Richa sharma","pune","2005-12-07","Life Time");
+insert into member values(2,"Garima sen","pune","2020-12-04","Annual");
+select * from member;
+
+insert into books values(101,"Let us c","Denis Ritchie",450,"System");
+insert into books values(102,"Oracle Complete Ref","Loni",550,"DataBase");
+insert into books values(103,"Mastering SQL","Loni",650,"");
+insert into books values(104,"PL SQL-Ref","ScottUrman",750,"DataBase");
+
+update books set cost=300 where book_no=103;
+select * from books;
+
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1001,101,1,"2020-12-10");
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1002,102,2,"2020-12-11");
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1003,104,1,"2020-12-13");
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1004,101,2,"2020-12-14");
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1005,104,1,"2020-12-15");
+insert into issue(lib_issue_id,book_no,member_id,issue_date) values(1006,101,2,"2020-12-18");
+select * from issue;

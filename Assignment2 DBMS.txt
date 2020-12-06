@@ -1,0 +1,445 @@
+mysql> use vikram;
+Database changed
+mysql> create database assignment_2;
+Query OK, 1 row affected (0.27 sec)
+
+mysql> use assignment_2;
+Database changed
+mysql> create table publishers
+    -> (
+    -> pubid int(3) primary key,
+    -> pname varchar(30),
+    -> email varchar(50) unique,
+    -> phone varchar(30)
+    -> );
+Query OK, 0 rows affected (1.59 sec)
+
+mysql> create table subjects(
+    -> subid vrchar(5) primary key,
+    -> sname varchar(30)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vrchar(5) primary key,
+sname varchar(30)
+)' at line 2
+mysql> create table subjects(
+    -> subid vrchar(5) primary key,
+    -> \c
+mysql> create table subjects(
+    -> subid varchar(5) primary key,
+    -> sname varchar(30)
+    -> );
+Query OK, 0 rows affected (0.71 sec)
+
+mysql> create table authors
+    -> (
+    -> auid int(5),
+    -> aname varchar(30),
+    -> email varchar(50) unique,
+    -> phone varchar(30)
+    -> primary key(auid)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(auid)
+)' at line 7
+mysql> create table authors
+    -> (
+    -> auid int(5) primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create table authors(
+    -> auid int(5) primary key,
+    -> aname varchar(30),
+    -> email varchar(50) unique,
+    -> phone varchar(30)
+    -> );
+Query OK, 0 rows affected (0.68 sec)
+
+mysql> create table titles(
+    -> titleid int(5) primary key,
+    -> title varchar(30),
+    -> pubid int(3),
+    -> subid varchar(5),
+    -> pubdate date,
+    -> cover char(1) check(cover in('p','H','p','h')),
+    -> price int(4),
+    -> constraint titles_pubid_fk foreign key (pubid) references publishers(pubid),
+    -> constraint titles_subid_fk foreign key (subid) references subjects(subid)
+    -> );
+Query OK, 0 rows affected (1.35 sec)
+
+mysql> create table titleauthors
+    -> (
+    -> titleid int(5),
+    -> auid int(5),
+    -> importance int(2),
+    -> primary key(titleid,auid),
+    -> constraint titleauthors_titleid_fk foreign key(titleid) references titles(titleid),
+    -> constraint titleauthors_authid_fk foreign key (auid) references authors(auid)
+    -> );
+Query OK, 0 rows affected (0.67 sec)
+
+mysql> create table subject_backup
+    -> (
+    -> subid varchar(5) primary key,
+    -> sname varchar(30)
+    -> );
+Query OK, 0 rows affected (2.56 sec)
+
+mysql> insert into subjects values('ORA','Oracle Database 10g');
+Query OK, 1 row affected (0.31 sec)
+
+mysql> insert into subjects values('JAVA','JAVA LANGUAGE');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into subject values('JEE','JAVA ENTERPRISE EDITION');
+ERROR 1146 (42S02): Table 'assignment_2.subject' doesn't exist
+mysql> insert into subjects values('JEE','JAVA ENTERPRISE EDITION');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into subjects values('VB','VISUAL BASIC.NET');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into subjects values('ASP','ASP.NET');
+Query OK, 1 row affected (0.07 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert into publishers values(1,'Willey','WDT@VSNL.NET','91-11-23260877');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into publishers values(2,'WROX','INFO@WROX.com',NULL);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into publishers values(3,'TATA MCGRAW-HILL','FEEDBACK@TATAMCGRAWHILL.COM','91-11-33333322');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into publishers values(4,'TECHMEDIA','BOOKS@TECHMEDIA.COm','91-11-33257660');
+Query OK, 1 row affected (0.07 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert values authors values(101,'HERBERT SCHILD','HERBERT@YAHOO.COM',null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values authors values(101,'HERBERT SCHILD','HERBERT@YAHOO.COM',null)' at line 1
+mysql> insert into authors values(101,'HERBERT SCHILD','HERBERT@YAHOO.COM',null);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> insert into authors values(102,'JAMES GOODWILL','GOODWILL@HOTMAIL.com',null);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into authors values(103,'DAVAID HUNTER','HUNTER@HOTMAIL.com',null);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into authors values(104,'Stephen walther','walther@gmail.com',null);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into authors values(105,'KEVIN LONEY','LONEY@ORACLE.com',null);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into authors values(106,'ED.ROMANS','ROMANS@theserverside.com',null);
+Query OK, 1 row affected (0.11 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert into titles values(1001,'ASP.NET UNLEASHED',4,'ASP','12-APR-02','P',540);
+ERROR 1292 (22007): Incorrect date value: '12-APR-02' for column 'pubdate' at row 1
+mysql> insert into titles values(1001,'ASP.NET UNLEASHED',4,'ASP','2002-APR-12','P',540);
+ERROR 1292 (22007): Incorrect date value: '2002-APR-12' for column 'pubdate' at row 1
+mysql> insert into titles values(1001,'ASP.NET UNLEASHED',4,'ASP','2002-04-02','P',540);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into titles values(1002,'ORACLE10G COM.REF.',3,'ORA','2005-05-01','P',575);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into titles values(1003,'MASTERING EJB',1,'JEE','2005-02-03','P',475);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into titles values(1004,'JAVA COMP.REF',3,'JAVA','2005-04-03','P',499);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into titles values(1005,'PRO.VB >NET',2,'VB','2005-06-15','P',450);
+Query OK, 1 row affected (0.08 sec)
+
+mysql>
+mysql>
+mysql> insert into titleauthors values(1001,104,1);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into titleauthors values(1002,105,1);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into titleauthors values(1003,106,1);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into titleauthors values(1004,101,1);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into titleauthors values(1005,102,2);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> show tables;
++------------------------+
+| Tables_in_assignment_2 |
++------------------------+
+| authors                |
+| publishers             |
+| subject_backup         |
+| subjects               |
+| titleauthors           |
+| titles                 |
++------------------------+
+6 rows in set (0.09 sec)
+
+mysql> desc authors;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| auid  | int(5)      | NO   | PRI | NULL    |       |
+| aname | varchar(30) | YES  |     | NULL    |       |
+| email | varchar(50) | YES  | UNI | NULL    |       |
+| phone | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.17 sec)
+
+mysql> select * from authors;
++------+-----------------+--------------------------+-------+
+| auid | aname           | email                    | phone |
++------+-----------------+--------------------------+-------+
+|  101 | HERBERT SCHILD  | HERBERT@YAHOO.COM        | NULL  |
+|  102 | JAMES GOODWILL  | GOODWILL@HOTMAIL.com     | NULL  |
+|  103 | DAVAID HUNTER   | HUNTER@HOTMAIL.com       | NULL  |
+|  104 | Stephen walther | walther@gmail.com        | NULL  |
+|  105 | KEVIN LONEY     | LONEY@ORACLE.com         | NULL  |
+|  106 | ED.ROMANS       | ROMANS@theserverside.com | NULL  |
++------+-----------------+--------------------------+-------+
+6 rows in set (0.30 sec)
+
+mysql> select pname,phone,email from publishers;
++------------------+----------------+-----------------------------+
+| pname            | phone          | email                       |
++------------------+----------------+-----------------------------+
+| Willey           | 91-11-23260877 | WDT@VSNL.NET                |
+| WROX             | NULL           | INFO@WROX.com               |
+| TATA MCGRAW-HILL | 91-11-33333322 | FEEDBACK@TATAMCGRAWHILL.COM |
+| TECHMEDIA        | 91-11-33257660 | BOOKS@TECHMEDIA.COm         |
++------------------+----------------+-----------------------------+
+4 rows in set (0.80 sec)
+
+mysql> select aname,phone from authors;
++-----------------+-------+
+| aname           | phone |
++-----------------+-------+
+| HERBERT SCHILD  | NULL  |
+| JAMES GOODWILL  | NULL  |
+| DAVAID HUNTER   | NULL  |
+| Stephen walther | NULL  |
+| KEVIN LONEY     | NULL  |
+| ED.ROMANS       | NULL  |
++-----------------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select titleid,title,pubdate from titles;
++---------+--------------------+------------+
+| titleid | title              | pubdate    |
++---------+--------------------+------------+
+|    1001 | ASP.NET UNLEASHED  | 2002-04-02 |
+|    1002 | ORACLE10G COM.REF. | 2005-05-01 |
+|    1003 | MASTERING EJB      | 2005-02-03 |
+|    1004 | JAVA COMP.REF      | 2005-04-03 |
+|    1005 | PRO.VB >NET        | 2005-06-15 |
++---------+--------------------+------------+
+5 rows in set (0.03 sec)
+
+mysql> select aiud,titleid,importance from titleauthors;
+ERROR 1054 (42S22): Unknown column 'aiud' in 'field list'
+mysql> select auid,titleid,importance from titleauthors;
++------+---------+------------+
+| auid | titleid | importance |
++------+---------+------------+
+|  104 |    1001 |          1 |
+|  105 |    1002 |          1 |
+|  106 |    1003 |          1 |
+|  101 |    1004 |          1 |
+|  102 |    1005 |          2 |
++------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from subjects;
++-------+-------------------------+
+| subid | sname                   |
++-------+-------------------------+
+| ASP   | ASP.NET                 |
+| JAVA  | JAVA LANGUAGE           |
+| JEE   | JAVA ENTERPRISE EDITION |
+| ORA   | Oracle Database 10g     |
+| VB    | VISUAL BASIC.NET        |
++-------+-------------------------+
+5 rows in set (0.07 sec)
+
+mysql> show tables;
++------------------------+
+| Tables_in_assignment_2 |
++------------------------+
+| authors                |
+| publishers             |
+| subject_backup         |
+| subjects               |
+| titleauthors           |
+| titles                 |
++------------------------+
+6 rows in set (0.23 sec)
+
+mysql> desc authors;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| auid  | int(5)      | NO   | PRI | NULL    |       |
+| aname | varchar(30) | YES  |     | NULL    |       |
+| email | varchar(50) | YES  | UNI | NULL    |       |
+| phone | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.29 sec)
+
+mysql> desc publishers;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pubid | int(3)      | NO   | PRI | NULL    |       |
+| pname | varchar(30) | YES  |     | NULL    |       |
+| email | varchar(50) | YES  | UNI | NULL    |       |
+| phone | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| assignment_2       |
+| mysql              |
+| performance_schema |
+| pramod             |
+| sakila             |
+| sys                |
+| vikram             |
+| world              |
++--------------------+
+9 rows in set (0.35 sec)
+
+mysql> create database assignment_3;
+Query OK, 1 row affected (0.17 sec)
+mysql> select sname from subjects where sname like 'j%';
++-------------------------+
+| sname                   |
++-------------------------+
+| JAVA LANGUAGE           |
+| JAVA ENTERPRISE EDITION |
++-------------------------+
+2 rows in set (0.00 sec)
+mysql> select sname from subjects where sname like '%.net%';
++------------------+
+| sname            |
++------------------+
+| ASP.NET          |
+| VISUAL BASIC.NET |
++------------------+
+2 rows in set (0.00 sec)
+mysql> select sname from subjects where sname like '%ge';
++---------------+
+| sname         |
++---------------+
+| JAVA LANGUAGE |
++---------------+
+1 row in set (0.00 sec)
+mysql> select pname from publishers where pname like'%hill%';
++------------------+
+| pname            |
++------------------+
+| TATA MCGRAW-HILL |
++------------------+
+1 row in set (0.02 sec)
+mysql> select title from titles where price <500;
++---------------+
+| title         |
++---------------+
+| MASTERING EJB |
+| JAVA COMP.REF |
+| PRO.VB >NET   |
++---------------+
+3 rows in set (0.03 sec)
+mysql> select title from titles where pubdate < '2005-04-3';
++-------------------+
+| title             |
++-------------------+
+| ASP.NET UNLEASHED |
+| MASTERING EJB     |
++-------------------+
+2 rows in set (0.12 sec)
+
+mysql> select sqrt(64);
++----------+
+| sqrt(64) |
++----------+
+|        8 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select sqrt(63);
++-------------------+
+| sqrt(63)          |
++-------------------+
+| 7.937253933193772 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select power(3,2);
++------------+
+| power(3,2) |
++------------+
+|          9 |
++------------+
+1 row in set (0.05 sec)
+
+mysql> select power(3,9);
++------------+
+| power(3,9) |
++------------+
+|      19683 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select mod(10,3);
++-----------+
+| mod(10,3) |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.14 sec)
+
+mysql> select mod(10,4);
++-----------+
+| mod(10,4) |
++-----------+
+|         2 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select mod(10.23,4);
++--------------+
+| mod(10.23,4) |
++--------------+
+|         2.23 |
++--------------+
+1 row in set (0.00 sec)
+mysql> select * from titles where month(pubdate)=4;
++---------+-------------------+-------+-------+------------+-------+-------+
+| titleid | title             | pubid | subid | pubdate    | cover | price |
++---------+-------------------+-------+-------+------------+-------+-------+
+|    1001 | ASP.NET UNLEASHED |     4 | ASP   | 2002-04-02 | P     |   540 |
+|    1004 | JAVA COMP.REF     |     3 | JAVA  | 2005-04-03 | P     |   499 |
++---------+-------------------+-------+-------+------------+-------+-------+
+2 rows in set (0.12 sec)
